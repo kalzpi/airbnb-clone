@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -38,6 +38,21 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 ]
+
+PROJECT_APPS = [
+    "core.apps.CoreConfig",
+    "users.apps.UsersConfig",
+    "rooms.apps.RoomsConfig",
+    "reviews.apps.ReviewsConfig",
+    "reservations.apps.ReservationsConfig",
+    "lists.apps.ListsConfig",
+    "conversations.apps.ConversationsConfig",
+]
+
+THIRD_PARTY_APPS = ["django_countries", "django_seed"]
+
+INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -54,7 +69,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -111,4 +126,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+
 STATIC_URL = "/static/"
+
+AUTH_USER_MODEL = "users.User"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
+
+MEDIA_URL = "/media/"
