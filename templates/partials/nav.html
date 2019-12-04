@@ -1,4 +1,10 @@
 <a href="{% url 'core:home' %}" class="">Nbnb</a>
 <ul>
-    <li><a href="#" class="">Login</a></div></li>
+    
+    {% if user.is_authenticated %}
+        <li><a href="{% url 'users:logout' %}" class="">Logout</a></div></li>    
+    {% else %}
+        <li><a href="{% url 'users:login' %}" class="">Login</a></div></li>
+        <li><a href="{% url 'users:signup' %}" class="">Signup</a></div></li>
+    {% endif %}
 </ul>

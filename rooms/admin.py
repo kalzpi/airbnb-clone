@@ -41,7 +41,7 @@ class RoomAdmin(admin.ModelAdmin):
             "More About the Space",
             {
                 "classes": ("collapse",),
-                "fields": ("amenities", "facility", "house_rules",),
+                "fields": ("amenities", "facilities", "house_rules",),
             },
         ),
         ("Last Details", {"fields": ("host",)},),
@@ -69,7 +69,7 @@ class RoomAdmin(admin.ModelAdmin):
         "host__superhost",
         "room_type",
         "amenities",
-        "facility",
+        "facilities",
         "house_rules",
         "city",
         "country",
@@ -81,7 +81,7 @@ class RoomAdmin(admin.ModelAdmin):
 
     filter_horizontal = (
         "amenities",
-        "facility",
+        "facilities",
         "house_rules",
     )
 
