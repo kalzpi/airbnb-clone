@@ -1,19 +1,26 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <title>{% block page_title %}{% endblock page_title %} | SRC</title>
   </head>
-  <body>
-    <header>
+  <body class="text-gray-800 mt-24 mx-10">
+    <header class="container max-w-full inset-0 flex items-center justify-between px-6 h-20 border-b border-gray-300 fixed bg-white">
+      <div class="w-96 flex items-center">
+        <a href="{% url 'core:home' %}">
+            <img src="{% static 'img/logo.png' %}" alt="" class="w-8 mr-5">
+        </a>
+        {% block search-bar %}
+        <form method="get" action="{% url 'rooms:search' %}" class="w-full">
+          <input name="city" placeholder="Search by City" class="search-box w-full border text-gray-900 placeholder-gray-600 font-medium px-5 py-2 rounded-sm w-64 shadow-md hover:shadow-lg focus:outline-none"/>
+        </form>
+        {% endblock search-bar %}
+      </div>
       {% include "partials/nav.html" %}
-      {% block search-bar %}
-      <form method="get" action="{% url 'rooms:search' %}">
-        <input name="city" placeholder="Search by City" />
-      </form>
-      {% endblock search-bar %}
 
     </header>
 
