@@ -139,8 +139,15 @@ MEDIA_URL = "/media/"
 
 # Email configuration
 
-EMAIL_HOST = "smtp.mailgun.org"
-EMAIL_PORT = "587"
-EMAIL_HOST_USER = os.environ.get("MAILGUN_USERNAME")
-EMAIL_HOST_PASSWORD = os.environ.get("MAILGUN_PASSWORD")
-EMAIL_FROM = "sexy-guy@sandbox47f4e11245254db9b967a2c74c558983.mailgun.org"
+# EMAIL_HOST = "smtp.mailgun.org"
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = os.environ.get("MAILGUN_USERNAME")
+# EMAIL_HOST_PASSWORD = os.environ.get("MAILGUN_PASSWORD")
+# EMAIL_FROM = "sexy-guy@sandbox47f4e11245254db9b967a2c74c558983.mailgun.org"
+
+EMAIL_HOST = "smtp.worksmobile.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.environ.get("LINEWORKS_USERNAME")
+EMAIL_HOST_PASSWORD = os.environ.get("LINEWORKS_PASSWORD")
+EMAIL_FROM = "yhhuh@srcroll.com"
+EMAIL_USE_TLS = True

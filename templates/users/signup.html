@@ -8,13 +8,15 @@
     {% endblock search-bar %}
 
     {% block content %}
-   
-        {% include "partials/social_login.html" %}
+        <div class="container w-96 mx-auto my-10 flex flex-col items-center border border-gray-400 p-6">
+            {% include "partials/social_login.html" %}
+    
+            {% include "mixins/auth/auth_form.html" with form=form cta="Sign Up" %}
+
+            <div class="flex w-full items-center mt-4 justify-end">
+                <span class="mr-4 text-gray-600 italic font-thin">Have an account?</span><a href="{% url 'users:login' %}" class="text-sm font-bold text-teal-400">Log In</a>
+            </div>
+        </div>
         
-        <form method="POST" action="{% url 'users:signup' %}">
-            {% csrf_token %}
-            {{form.as_p}}
-            <button>Sign Up</button>
-        </form>
 
     {% endblock content %}

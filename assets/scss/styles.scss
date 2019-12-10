@@ -16,4 +16,67 @@
   }
 }
 
+.btn {
+  @apply py-4 w-full text-center rounded font-medium;
+}
+
+input.btn {
+  @apply pl-4 text-left w-full rounded-sm font-medium border border-gray-500;
+  &:focus {
+    @apply outline-none border-teal-400;
+  }
+}
+
+form {
+  .input {
+    @apply mb-3;
+    &.has_error {
+      input {
+        @apply bg-red-200 border-gray-400;
+        &:focus {
+          @apply border-gray-600;
+        }
+      }
+    }
+  }
+}
+
+@keyframes messageFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  5% {
+    opacity: 1;
+    transform: translateY(50px);
+  }
+  95% {
+    opacity: 1;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+}
+
+.message {
+  animation: messageFadeIn 5s ease-in-out forwards;
+  &.error {
+    @apply bg-red-600;
+  }
+  &.debug {
+    @apply bg-red-600;
+  }
+  &.info {
+    @apply bg-blue-600;
+  }
+  &.success {
+    @apply bg-green-600;
+  }
+  &.warning {
+    @apply bg-yellow-600;
+  }
+}
+
 @tailwind utilities;

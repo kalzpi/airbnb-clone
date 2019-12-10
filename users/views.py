@@ -1,18 +1,18 @@
 import os
 import requests
 from django.views import View
-from django.views.generic import FormView
+from django.views.generic import FormView, DetailView
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.core.files.base import ContentFile
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 from . import forms, models
 
 
 class LoginView(View):
     def get(self, request):
-        form = forms.LoginForm(initial={"email": "kalzpi@gmail.com"})
+        form = forms.LoginForm()
         return render(request, "users/login.html", {"form": form},)
 
     def post(self, request):
@@ -32,7 +32,6 @@ class SignUpView(FormView):
     template_name = "users/signup.html"
     form_class = forms.SignUpForm
     success_url = reverse_lazy("core:home")
-    initial = {}
 
     def form_valid(self, form):
         form.save()
@@ -45,7 +44,12 @@ class SignUpView(FormView):
         return super().form_valid(form)
 
 
+class UserProfileView(DetailView):
+    pass
+
+
 def log_out(request):
+    messages.success(request, "See you again!")
     logout(request)
     return redirect(reverse("core:home"))
 
@@ -86,7 +90,7 @@ def kakao_callback(request):
         token_json = token_request.json()
         error = token_json.get("error", None)
         if error is not None:
-            raise KakaoException
+            raise KakaoException("Access token is not authorized.")
         print(token_json)
         access_token = token_json.get("access_token")
         profile_request = requests.get(
@@ -97,14 +101,14 @@ def kakao_callback(request):
         print(profile_json)
         email = profile_json.get("kaccount_email", None)
         if email is None:
-            raise KakaoException()
+            raise KakaoException("No response from kakao.")
         properties = profile_json.get("properties")
         nickname = properties.get("nickname")
         profile_image = properties.get("profile_image")
         try:
             user = models.User.objects.get(email=email)
             if user.login_method != models.User.LOGIN_KAKAO:
-                raise KakaoException()
+                raise KakaoException(f"Please log in with: {user.login_method}")
         except models.User.DoesNotExist:
             user = models.User.objects.create(
                 username=email,
@@ -121,6 +125,8 @@ def kakao_callback(request):
                     f"{user.pk}-avatar", ContentFile(photo_request.content)
                 )
         login(request, user)
+        messages.success(request, f"Welcome back, {user.username}")
         return redirect(reverse("core:home"))
-    except KakaoException:
+    except KakaoException as e:
+        messages.error(request, e)
         return redirect(reverse("users:login"))
