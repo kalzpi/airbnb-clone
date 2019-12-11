@@ -8,8 +8,6 @@
     {% endblock search-bar %}
 
     {% block content %}
-
-        
         <div class="container w-96 mx-auto my-10 flex flex-col items-center border border-gray-400 p-6">
             {% include "partials/social_login.html" %}
 
@@ -18,7 +16,6 @@
             <div class="flex w-full items-center mt-4 justify-end">
                 <span class="mr-4 text-gray-600 italic font-thin">Don't have an account?</span><a href="{% url 'users:signup' %}" class="text-sm font-bold text-teal-400">Sign Up</a>
             </div>
-
         </div>
 
     {% endblock content %}

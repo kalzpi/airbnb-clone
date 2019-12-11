@@ -16,15 +16,26 @@
   }
 }
 
-.btn {
-  @apply py-4 w-full text-center rounded font-medium;
-}
-
-input.btn {
-  @apply pl-4 text-left w-full rounded-sm font-medium border border-gray-500;
+form .input input,
+form textarea,
+form select {
+  @apply py-4 text-left font-medium pl-4 w-full rounded-sm font-medium border border-gray-500;
   &:focus {
     @apply outline-none border-teal-400;
   }
+}
+
+form textarea {
+  resize: none;
+  height: 100px;
+}
+
+form select {
+  height: 30px;
+}
+
+form .btn {
+  @apply py-4 text-center font-medium w-full rounded-sm font-medium border border-gray-500;
 }
 
 form {

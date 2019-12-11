@@ -4,11 +4,9 @@ from . import models
 
 class LoginForm(forms.Form):
 
-    email = forms.EmailField(
-        widget=forms.EmailInput(attrs={"placeholder": "Email", "class": "btn"})
-    )
+    email = forms.EmailField(widget=forms.EmailInput(attrs={"placeholder": "Email"}))
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={"placeholder": "Password", "class": "btn"})
+        widget=forms.PasswordInput(attrs={"placeholder": "Password"})
     )
 
     def clean(self):
@@ -33,22 +31,16 @@ class SignUpForm(forms.ModelForm):
             "email",
         )
         widgets = {
-            "first_name": forms.TextInput(
-                attrs={"placeholder": "First Name", "class": "btn"}
-            ),
-            "last_name": forms.TextInput(
-                attrs={"placeholder": "Last Name", "class": "btn"}
-            ),
-            "email": forms.EmailInput(attrs={"placeholder": "Email", "class": "btn"},),
+            "first_name": forms.TextInput(attrs={"placeholder": "First Name"}),
+            "last_name": forms.TextInput(attrs={"placeholder": "Last Name"}),
+            "email": forms.EmailInput(attrs={"placeholder": "Email"},),
         }
 
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={"placeholder": "Password", "class": "btn"})
+        widget=forms.PasswordInput(attrs={"placeholder": "Password"})
     )
     password1 = forms.CharField(
-        widget=forms.PasswordInput(
-            attrs={"placeholder": "Confirm Password", "class": "btn"}
-        )
+        widget=forms.PasswordInput(attrs={"placeholder": "Confirm Password"})
     )
 
     def clean_email(self):
