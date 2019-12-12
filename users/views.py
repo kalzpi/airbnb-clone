@@ -28,6 +28,9 @@ class LoginView(mixins.LoggedOutOnlyView, View):
             user = authenticate(request, username=email, password=password)
             if user is not None:
                 login(request, user)
+                next_arg = self.request.GET.get("next")
+                if next_arg is not None:
+                    return redirect(next_arg)
                 return redirect(reverse("core:home"))
         return render(request, "users/login.html", {"form": form})
 
@@ -168,7 +171,10 @@ class UserProfileUpdateView(mixins.LoggedInOnlyView, SuccessMessageMixin, Update
 
 
 class UpdatePasswordView(
-    mixins.LoggedInOnlyView, SuccessMessageMixin, PasswordChangeView
+    mixins.LoggedInOnlyView,
+    mixins.EmailLoginOnlyView,
+    SuccessMessageMixin,
+    PasswordChangeView,
 ):
     template_name = "users/update_password.html"
     success_message = "Password Updated"
