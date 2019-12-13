@@ -151,3 +151,7 @@ EMAIL_HOST_USER = os.environ.get("LINEWORKS_USERNAME")
 EMAIL_HOST_PASSWORD = os.environ.get("LINEWORKS_PASSWORD")
 EMAIL_FROM = "yhhuh@srcroll.com"
 EMAIL_USE_TLS = True
+
+
+# LOGIN_URL
+LOGIN_URL = "/users/login/"

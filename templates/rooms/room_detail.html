@@ -108,11 +108,42 @@
       <div class="w-1/3">
         
         {% if room.host == user %}
-          <a href="{% url 'rooms:edit' room.pk %}" class="py-1 px-1 bg-teal-400 text-white text-sm font-medium rounded-sm">Edit Room</a>  
-        {% endif %}
+          <a href="{% url 'rooms:edit' room.pk %}" class="py-1 px-1 bg-teal-400 text-white text-sm font-medium rounded-sm">Edit Room</a>
+        {% else %}
           
-        
+          {% if not request.session.is_hosting %}
+            
+            {% for calendar in room.get_calendars %}
+            <div class="calendar mb-20">
+              <span class="text-center font-medium text-lg block mb-8">{{calendar.get_month}} {{calendar.year}}</span>
+              
+              <div class="cal-grid mb-4">
+                {% for day_name in calendar.day_names %}
+                  <span class="font-medium">{{day_name}}</span>
+                {% endfor %}
+              </div>
+              <div class="cal-grid mb-4">                
+                {% for day in calendar.get_days %}
+                    {% if day.number != 0 %}
+                      
+                      {% if day.past %}
+                        <span class="text-sm w-full text-center rounded py-1 bg-gray-400">{{day}}</span>
+                      {% else %} 
+                        <span class="text-sm bg-gray-200 w-full text-center rounded text-gray-700 py-1 hover:bg-teal-400 hover:text-white hover:font-medium cursor-pointer">{{day}}</span>
+                      {% endif %}
+                        
+                      
+                    {% else %}
+                      <span></span>
+                    {% endif %}
+                {% endfor %}                  
+            </div>
+            </div>              
+            {% endfor %}            
+          {% endif %}        
+        {% endif %}                  
       </div>
+      {{room.cal_test}}
     </div>
 
 

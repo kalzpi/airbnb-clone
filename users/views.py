@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -29,6 +30,7 @@ class LoginView(mixins.LoggedOutOnlyView, View):
             if user is not None:
                 login(request, user)
                 next_arg = self.request.GET.get("next")
+                messages.success(self.request, "Welcome Back!")
                 if next_arg is not None:
                     return redirect(next_arg)
                 return redirect(reverse("core:home"))
@@ -192,3 +194,12 @@ class UpdatePasswordView(
         form.fields["new_password2"].widget.attrs = {"placeholder": "Confirm Password"}
         return form
 
+
+@login_required
+def switch_hosting(request):
+    try:
+        del request.session["is_hosting"]
+    except KeyError:
+        request.session["is_hosting"] = True
+
+    return redirect(reverse("core:home"))
